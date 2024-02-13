@@ -17,12 +17,10 @@ function HomepageHeader() {
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            QPod Tutorial - 3min ⏱️
-          </Link>
+          <Link className="button button--secondary button--lg" to="/docs/intro-en" style={{margin: '0 10px'}}>QPod Tutorial - 3min ⏱️</Link>
+          <Link className="button button--secondary button--lg" to="/docs/intro-cn" style={{margin: '0 10px'}}>QPod使用指引 - 3min ⏱️</Link>
         </div>
+        
         <img
           src="https://raw.githubusercontent.com/wiki/QPod/qpod-hub/img/QPod-screenshot.webp"
           alt="Screenshot of QPod"

@@ -6,7 +6,7 @@ on:
       - main  # default branch
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +30,19 @@ jobs:
         with: # 👇 Specify build output path
           path: QPod/build
 
+  deploy:
+    needs: build
+
+    permissions:  # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    environment:  # Deploy to the github-pages environment
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
         id: deployment
+        uses: actions/deploy-pages@v4
