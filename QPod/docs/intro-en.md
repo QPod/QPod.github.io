@@ -6,11 +6,11 @@ sidebar_position: 01
 
 ## Your Swiss Army Knife for AI & Data Science
 
-In a nutshell, `QPod` ( [DockerHub](https://hub.docker.com/r/qpod/qpod/) | [GitHub](https://github.com/QPod/docker-images) ) is an **out-of-box Data Science / AI environment and platform** at your fingertip which you would love 💕.
+In a nutshell, `QPod` ( [DockerHub](https://hub.docker.com/u/qpod/) | [GitHub](https://github.com/QPod/) ) is an **out-of-box Data Science / AI environment and platform** at your fingertip which you would love 💕.
 
 With Docker and `QPod`, you
 
-- 📦 can start your data science / AI projects with nearly `zero configuration` - QPod puts everything about installing (latest) packages and configuring environment into standard docker images and set you free from these tedious work.
+- 📦 can start your data science / AI projects with nearly `zero configuration` - QPod puts everything about installing (latest) packages and configuring environment into standard docker images and sets you free from these tedious work.
 - 🌍 will find your work more `easy-to-reproduce` - QPod standard images make scientific research or data analysis project as [reproducible pipelines](https://doi.org/10.1038/d41586-018-07196-1) and help you [share your work with others](https://doi.org/10.1038/515151a).
 - 🆙 can easily `scale-up and scale-out` your algorithms and key innovations - QPod help you move forward smoothly from the development stage to deployment stage by re-using these images to either to provide RESTful APIs or orchestrate map/reduce operations on big data.
 
@@ -30,16 +30,33 @@ With Docker and `QPod`, you
 
 ## How to use? `1-2-3-GO`🎉
 
-### 0. Have docker installed on your laptop/server - Linux (e.g.: Ubuntu LTS) / Windows (>=10) / macOS
+### 0. Have docker installed on your laptop/server
 
-- Install **Docker >= 19.03**: `docker-ce` ( community version & free: [Linux](https://hub.docker.com/search/?offering=community&type=edition&operating_system=linux) | [macOS](https://hub.docker.com/editions/community/docker-ce-desktop-mac) | [Windows](https://desktop.docker.com/win/stable/amd64/Docker%20Desktop%20Installer.exe)   ) on your laptop/server. **Docker installed from default Ubuntu/CentOS repository probably won't work for GPU!**
-- If you want to use *NVIDIA GPUs* with `QPod`, Linux server or latest Windows WSL2 is **required**. After installing **Docker >= 19.03**, also install both the [`NVIDIA driver`](https://github.com/NVIDIA/nvidia-docker/wiki/Frequently-Asked-Questions#how-do-i-install-the-nvidia-driver) and the latest version of [`nvidia-container-toolkit`](https://github.com/NVIDIA/nvidia-docker#quickstart) to use the GPUs in containers.
+- Linux (e.g.: Ubuntu LTS): install [docker-ce](https://hub.docker.com/search/?offering=community&type=edition&operating_system=linux) ( community version & free: ) directly (or install other container services like podman).
+
+- macOS: install [docker-ce-desktop](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
+
+- Windows (>=10):
+
+  - Option 1 (recommended): install WSL2 and latest Ubuntu distro, and then install [docker-ce](https://hub.docker.com/search/?offering=community&type=edition&operating_system=linux) just like on Linux.
+  - Option 2: [docker-ce desktop](https://desktop.docker.com/win/stable/amd64/Docker%20Desktop%20Installer.exe)
+
+### Special reminder for GPU and cuda users
+
+**Docker installed from default Ubuntu/CentOS repository probably won't work for GPU!**
+
+If you want to use *NVIDIA GPUs* with `QPod`, Linux server or latest Windows WSL2 is **required**.
+
+After installing **Docker >= 19.03**, also install both
+
+- the [`NVIDIA driver`](https://github.com/NVIDIA/nvidia-docker/wiki/Frequently-Asked-Questions#how-do-i-install-the-nvidia-driver) that fits your hardware,
+- and the latest version of [`nvidia-container-toolkit`](https://github.com/NVIDIA/nvidia-docker#quickstart) to use the GPUs in containers.
 
 ### 1. Choose the features and choose a folder on your disk
 
 - Choose a folder on your laptop/server to server as the base directory (e.g.: `/root`, `/User/me`, or `D:/work`). Use an absolute path instead of relative path -- files in this folder are visible in the environment (files outside this folder are not).
 
-- Choose an tag from the table below (e.g `full` for your laptop, or `full-cuda` for a Linux server with NVIDIA GPU), depends on what features/moduels do you want.
+- Choose an tag from [QPod feature matrix](tutorial-basics/qpod-stacks.md) (e.g `full` for your laptop, or `full-cuda` for a Linux server with NVIDIA GPU), depends on what features/moduels do you want.
 Typically, you can choose `full` / `full-cuda` if you have enough disk space and no worry about your network speed.
 
 ### 2. Start the container

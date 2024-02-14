@@ -4,11 +4,11 @@ sidebar_position: 02
 
 # QPod使用指引
 
-AI/数据科学的瑞士军刀——QPod提供了一站式、开箱即用、可自由定制的，基于容器的、开源AI/数据科学开发、分析工具。
-
 ## AI/数据科学的瑞士军刀
 
-QPod将常见的、最新的开放数据科学环境和工具封装成为了docker镜像，你无需进行繁琐的环境配置即可快速开始AI/数据科学的工程，同时能够方便地复现与分享您的研究工作。您可以在QPod中使用Jupyter Notebook/JupyterLab中运行Python, R, OpenJDK, NodeJS, Go, Julia, Octave等语言，QPod也包含了VS Code, R-Studio等工具。使用QPod，您可以：
+AI/数据科学的瑞士军刀——QPod提供了一站式、开箱即用、可自由定制的，基于容器的、开源AI/数据科学开发、分析工具。
+
+QPod将常见的、最新的开放数据科学环境和工具封装成为了容器镜像，你无需进行繁琐的环境配置即可快速开始AI/数据科学的工程，同时能够方便地复现与分享您的研究工作。您可以在QPod中使用Jupyter Notebook/JupyterLab中运行Python, R, OpenJDK, NodeJS, Go, Julia, Rust等语言，QPod也封装了VS Code, R-Studio等工具。使用QPod，您可以：
 
 - 📦 避免繁琐的环境配置、安装过程，QPod已经把常用的、最新的环境和工具封装在容器镜像中，您可以开箱即用；
 - 🌍 让您的工作更容易被自己/他人`复现`——QPod让科学研究和数据分析项目成为[可复现的工作流(reproducible pipelines)](https://doi.org/10.1038/d41586-018-07196-1)，这能让你更好地和同行[分享你的工作](https://doi.org/10.1038/515151a).
@@ -18,7 +18,7 @@ QPod将常见的、最新的开放数据科学环境和工具封装成为了dock
 
 ## QPod包含了什么
 
-QPod封装、整理、维护了一些列的容器镜像，这些镜像包含了常见的开放AI/数据科学语言环境和安装包：Ptyhon, R, OpenJDK, NodeJS, Go, Julia, Octave等，同时封装了Jupyter Notebook / JupyterLab / VS Code / RStudio等IDE让用户便捷地进行开发、交互计算。QPod适用于下面的应用场景：
+QPod封装、整理、维护了一些列的容器镜像，这些镜像包含了常见的开放AI/数据科学语言环境和安装包：Ptyhon, R, OpenJDK, NodeJS, Go, Julia, Rust等，同时封装了Jupyter Notebook / JupyterLab / VS Code / RStudio等IDE让用户便捷地进行开发、交互计算。QPod适用于下面的应用场景：
 
 - 单机使用：在笔记本/台式机/工作站上使用，作为AI/数据科学开发环境；
 - 多租户使用：在服务器/集群上供多用户使用，以共享服务器计算资源（如GPU）；
@@ -26,17 +26,31 @@ QPod封装、整理、维护了一些列的容器镜像，这些镜像包含了�
 
 ## 安装使用 `1-2-3-GO`🎉
 
-### 0.安装Docker
+### 0. 在服务器/笔记本上安装Docker
 
-Linux (e.g.: Ubuntu LTS) / Windows (>=10) / macOS.
+- Linux (如: 最新版Ubuntu LTS): 直接安装 [docker-ce](https://hub.docker.com/search/?offering=community&type=edition&operating_system=linux) ( 社区版、免费 ) directly (也可以使用其他容器平台，例如podman)；
 
-- CPU用户：请安装 docker-ce ( [Linux](https://hub.docker.com/search/?offering=community&type=edition&operating_system=linux) | [macOS](https://download.docker.com/mac/stable/Docker.dmg) | [Windows](https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe) ) 或 [docker-ee](https://hub.docker.com/search/?offering=enterprise&type=edition)
-- GPU用户：需使用Linux，在安装Docker之后还需安装[NVIDIA driver](https://github.com/NVIDIA/nvidia-docker/wiki/Frequently-Asked-Questions#how-do-i-install-the-nvidia-driver)与最新版的[nvidia-container-toolkit](https://github.com/NVIDIA/nvidia-docker#quickstart)
+- macOS: 直接安装 [docker-ce-desktop](https://hub.docker.com/editions/community/docker-ce-desktop-mac)；
+
+- Windows (>=10):
+
+  - 选项1 (推荐): 先启用WSL2并安装最新的Ubuntu发行, 再参照在Linux上安装[docker-ce](https://hub.docker.com/search/?offering=community&type=edition&operating_system=linux)的步骤即可；
+  - Option 2: 直接安装[docker-ce desktop](https://desktop.docker.com/win/stable/amd64/Docker%20Desktop%20Installer.exe)。
+
+#### GPU和cuda使用的特别提示
+
+**请安装docker-ce，直接使用yum/apt官方源安装的docker有可能不能搭配cuda使用。**
+
+在安装Docker之后还需安装下面两个组件：
+
+- 与硬件设备适配的最新[NVIDIA driver](https://github.com/NVIDIA/nvidia-docker/wiki/Frequently-Asked-Questions#how-do-i-install-the-nvidia-driver)
+- 与最新版的[nvidia-container-toolkit](https://github.com/NVIDIA/nvidia-docker#quickstart)
 
 ### 1.选择你需要的功能包和你的工作目录
 
-- 从项目主页底部的表格（QPod镜像功能列表）中，选择你需要的功能包，如果你的磁盘空间和网速满足要求则推荐CPU用户选择`full`，GPU用户选择`full-cuda`
-- 选择你的工作目录，请使用绝对路径（如`/root`,`/User/me`,`D:/work`）
+- 选择你的工作目录`WORKDIR`，请使用绝对路径（如`/root`,`/User/me`,`D:/work`）；
+
+- 从 [QPod镜像功能列表](tutorial-basics/qpod-stacks.md) 中，选择你需要的功能包，如果你的磁盘空间和网速满足要求则推荐CPU用户选择`full`，GPU用户选择`full-cuda`。
 
 ### 2.准备下载和启动容器服务
 
@@ -100,22 +114,18 @@ timeout 10 && docker logs QPod 2>&1|findstr token=
 
 ## 附加信息
 
-### FAQ
-
-关于FAQ系列问题请参见[此处](https://github.com/QPod/docker-images/wiki)
-
 ### 硬件
 
-镜像需建立在`ubuntu:latest`且只能在×86平台测试，arm64/ppc64le平台预计进行少量修改之后可以适配。
+镜像需建立在`ubuntu:latest`且只能在x86平台测试，arm64/ppc64le平台预计进行少量修改之后可以适配。
 
 ### 安装包管理
 
-强烈不建议使用`conda`来安装lib或package，鉴于conda无法复用已有的系统库且无法提供稳定、最新的Liunx系统安装包库（例如某些包在`debian:jessie`下构建，在`debian:stretch`下就无法正常使用）。
+考虑到下面的原因，强烈不建议使用`conda`来安装lib或package，建议直接使用pypi：
+
+- conda安装源镜像在很多企业内网环境不可用（尤其是金融、医疗机构等严格隔离的内网网络），但这些机构往往有pypi源；
+- conda无法复用已有的系统库且无法提供稳定、最新的Liunx系统安装包库（例如某些包在`debian:jessie`下构建，在`debian:stretch`下就无法正常使用）；
+- 建立多个`conda env`环境会通过复制程序包来占用大量冗余的磁盘空间，其实可以通过使用建立多个容器实例来更好地管理和隔离不同的环境。
 
 ### 定制化
 
 若发现有系统库、Python模块或R包的缺失，可在`work`文件夹的`install_XX.list`中进行补充。
-
-### 致谢
-
-感谢[Logan](https://github.com/liuhaoge)同学的翻译和建议。

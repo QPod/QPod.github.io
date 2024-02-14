@@ -38,14 +38,14 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-          'https://github.com/QPod/QPod.github.io/tree/main/QPod/docs/',
+          'https://github.com/QPod/QPod.github.io/tree/main/QPod/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/QPod/QPod.github.io/tree/main/QPod/blog/',
+            'https://github.com/QPod/QPod.github.io/tree/main/QPod/',
         },
         theme: {
           customCss: './src/css/custom.css',
