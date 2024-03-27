@@ -32,7 +32,7 @@ As built artifacts changes in developing / testing (stagging) / release (product
 
 1. Each artifact should be properly versioned and tagged, especially when a testing (stagging) or production environment needs a rollback.
 
-2. The release artifact repo (such as Docker registry) should be a seperated one with the developing / testing (stagging) one(s), in order to better manage the artifiacts for production environment, and use proper resources. In many cases, the production environment requires an aritifact repo that is high-available, and better be in the same VPC/Zone/Region with the computing resources.
+2. The release artifact repo (such as Docker registry) should be a seperated one with the developing / testing (stagging) one(s), in order to better manage the artifiacts for production environment, and use proper resources. In many cases, the production environment requires an aritifact repo that is high-available, and better to be in the same VPC/Zone/Region with the computing resources, or with different push/pull permissions.
 
 As such, it became our choice to put artifacts of developing/testing stage and release/production artifiacts into different repo, at least differnt registry namespaces. In the `tool.sh` file above, you can see we use a variable `DOCKER_IMG_NAMESPACE` to decide which name space the artifact should be pushed into. Furthermore, this variable is decided by the **Git branch name prefix**:
 

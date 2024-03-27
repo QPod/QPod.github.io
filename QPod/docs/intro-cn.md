@@ -50,7 +50,7 @@ QPod封装、整理、维护了一些列的容器镜像，这些镜像包含了�
 
 - 选择你的工作目录`WORKDIR`，请使用绝对路径（如`/root`,`/User/me`,`D:/work`）；
 
-- 从 [QPod镜像功能列表](tutorial-basics/qpod-stacks.md) 中，选择你需要的功能包，如果你的磁盘空间和网速满足要求则推荐CPU用户选择`full`，GPU用户选择`full-cuda`。
+- 从 [QPod镜像功能列表](tutorial-basics/qpod-stacks-1-foundation.md) 中，选择你需要的功能包，如果你的磁盘空间和网速满足要求则推荐CPU用户选择`full`，GPU用户选择`full-cuda`。
 
 ### 2.准备下载和启动容器服务
 

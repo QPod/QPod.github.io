@@ -56,7 +56,7 @@ After installing **Docker >= 19.03**, also install both
 
 - Choose a folder on your laptop/server to server as the base directory (e.g.: `/root`, `/User/me`, or `D:/work`). Use an absolute path instead of relative path -- files in this folder are visible in the environment (files outside this folder are not).
 
-- Choose an tag from [QPod feature matrix](tutorial-basics/qpod-stacks.md) (e.g `full` for your laptop, or `full-cuda` for a Linux server with NVIDIA GPU), depends on what features/moduels do you want.
+- Choose an tag from [QPod feature matrix](tutorial-basics/qpod-stacks-1-foundation.md) (e.g `full` for your laptop, or `full-cuda` for a Linux server with NVIDIA GPU), depends on what features/moduels do you want.
 Typically, you can choose `full` / `full-cuda` if you have enough disk space and no worry about your network speed.
 
 ### 2. Start the container
