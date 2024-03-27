@@ -35,7 +35,7 @@ QPod封装、整理、维护了一些列的容器镜像，这些镜像包含了�
 - Windows (>=10):
 
   - 选项1 (推荐): 先启用WSL2并安装最新的Ubuntu发行, 再参照在Linux上安装[docker-ce](https://hub.docker.com/search/?offering=community&type=edition&operating_system=linux)的步骤即可；
-  - Option 2: 直接安装[docker-ce desktop](https://desktop.docker.com/win/stable/amd64/Docker%20Desktop%20Installer.exe)。
+  - Option 2（不建议）: 直接安装[docker-ce desktop](https://desktop.docker.com/win/stable/amd64/Docker%20Desktop%20Installer.exe)。
 
 #### GPU和cuda使用的特别提示
 
@@ -61,25 +61,28 @@ QPod封装、整理、维护了一些列的容器镜像，这些镜像包含了�
 由于下载过程需要从DockerHub下载较大的镜像文件，如果您使用的网络环境需要加速，
 请尝试使用阿里云提供的镜像：我们已经将镜像同步至了阿里云的北京、杭州镜像仓库（阿里云用户也可以使用VPS网络进一步加速）。
 
-方法为，在下面的`IMG`变量中，加上镜像前缀：
+方法为，在下面脚本执行时候的选择适合你的`REGISTRY`变量：
 
-- 北京镜像：`registry.cn-beijing.aliyuncs.com`
-- 杭州镜像：`registry.cn-hangzhou.aliyuncs.com`
-
-例如：`IMG="registry.cn-beijing.aliyuncs.com/qpod/base-dev:full"`
+例如：`REGISTRY="registry.cn-beijing.aliyuncs.com/qpod/base-dev:full"`
 
 #### Linux/macOS用户，在bash或终端中运行
 
 ```shell
-IMG="qpod/base-dev:latest"  # <- 你选择的功能包
-WORKDIR="/root"  # <- macOS用户建议改为用户目录，如：/Users/your_user_name
+WORKDIR="/root"             # <- macOS用户建议改为用户目录，如：/Users/your_user_name
+IMG="qpod/base-dev:latest"  # <- 你选择的功能包(Stack)
+
+REGISTRY="docker.io/"       # <- 如果连接境外dockerhub网络速度较快选择该行
+# REGISTRY="registry.cn-beijing.aliyuncs.com/"      # <- 如果在国内互联网环境，北方地区建议选择此项
+# REGISTRY="registry.cn-hangzhou.aliyuncs.com/"     # <- 如果在国内互联网环境，南方地区建议选择此项
+# REGISTRY="registry-vpc.cn-beijing.aliyuncs.com/"  # <- 如果使用国内阿里云VPC网环境，北方地区建议选择此项
+# REGISTRY="registry-vpc.cn-hangzhou.aliyuncs.com/" # <- 如果使用国内阿里云VPC网环境，南方地区建议选择此项
 
 docker run -d --restart=always \
     --name=QPod \
     --hostname=QPod \
     -p 8888:8888 -p 9999:9999 \
     -v $WORKDIR:/root \
-    $IMG
+    "${REGISTRY:-"docker.io/"}${IMG}"
 sleep 10s && docker logs QPod 2>&1|grep token=
 ```
 
@@ -89,10 +92,18 @@ sleep 10s && docker logs QPod 2>&1|grep token=
 - 👉 在`docker run`指令中增加一项: `--gpus all` (位于`--restart=always`之后，旧nvidia-container版本请使用`--runtime nvidia`)
 - 👉 使用`IMG="qpod/qpod:full-cuda"`或其他支持cuda的镜像
 
-#### Windows用户，在[Terminal](https://github.com/microsoft/terminal)或CMD中运行
+#### Windows用户
+
+推荐安装WSL后，在Linux使用上述相同命令。
+
+<details>
+
+  <summary>如果安装了Windows版docker-ce（不推荐），则：</summary>
+
+在[Terminal](https://github.com/microsoft/terminal)或CMD中运行：
 
 ```cmd
-SET IMG="qpod/qpod:full"
+SET IMG="qpod/developer:latest"
 SET WORKDIR="D:/work"
 
 docker run -d --restart=always ^
@@ -103,6 +114,7 @@ docker run -d --restart=always ^
     %IMG%
 timeout 10 && docker logs QPod 2>&1|findstr token=
 ```
+</details>
 
 ### 3.等待下载和启动
 
