@@ -1,6 +1,6 @@
 ---
-slug: 2024-qpod-ci-cd-toolkits-and-practices
-title: QPod CI/CD Toolkits and Practices
+slug: 2024-qpod-stack-ci-cd-practices-and-philosophy-en
+title: "📝 QPod CI/CD Toolkits and Practices"
 authors: [haobibo]
 tags: [QPod, docs]
 ---
